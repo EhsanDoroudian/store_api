@@ -15,7 +15,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/EhsanDoroudian/store_api.git
+git clone <your-repo-url>
 cd store_api
 
 # Create & activate virtual environment
@@ -76,7 +76,7 @@ store_api/
 Interactive API docs are available at:
 
 - [Swagger UI](http://127.0.0.1:8000/swagger/)  
-- [ReDoc](http://127.0.0.1:8000/redoc/)  
+- Optional: [ReDoc](http://127.0.0.1:8000/redoc/)  
 
 Test endpoints directly and explore request/response schemas.
 
