@@ -24,7 +24,6 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'price', 'inventory', 'category', 'slug', 'description', 'unit_price_after_tax']
         
     title = serializers.CharField(max_length=255, source='name')
-    category = serializers.StringRelatedField()
     unit_price_after_tax = serializers.SerializerMethodField(method_name='calculate_tax')
 
     def calculate_tax(self, product:Product):
@@ -78,7 +77,7 @@ class AddCartItemSerializer(serializers.ModelSerializer):
             cart_item.quantity += quantity
             cart_item.save()
         except CartItem.DoesNotExist:
-            cart_item = CartItem.objects.create(cart_id=cart_id)
+            cart_item = CartItem.objects.create(cart_id=cart_id, **validated_data)
         
         self.instance = cart_item
         return cart_item
@@ -162,14 +161,14 @@ class OrderCreateSerializer(serializers.Serializer):
         if not Cart.objects.filter(id=cart_id).exists():
             raise serializers.ValidationError("This cart does not exist")
         
-        if CartItem.objects.filter(cart_id=cart_id).count()=="0":
+        if CartItem.objects.filter(cart_id=cart_id).count()== 0:
             raise serializers.ValidationError("This cart is empty")
 
         return cart_id
     
     def save(self, **kwargs):
         with transaction.atomic():
-            cart_id = self.validate_cart_id['cart_id']
+            cart_id = self.validated_data['cart_id']
             user_id = self.context['user_id']
             customer = Customer.objects.get(user_id=user_id)
 

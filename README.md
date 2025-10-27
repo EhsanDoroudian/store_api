@@ -15,7 +15,7 @@
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone <https://github.com/EhsanDoroudian/store_api.git>
 cd store_api
 
 # Create & activate virtual environment
